@@ -1,0 +1,118 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>TroncoSport | Acceso al inventario</title>
+  <meta
+    name="description"
+    content="Sistema de gestion de inventario para TroncoSport con acceso de usuarios y control de procesos."
+  >
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body class="auth-page" data-page="index">
+  <div class="page-shell">
+    <header class="auth-header">
+      <a class="brand" href="index.html" aria-label="Ir al inicio de TroncoSport">
+        <img src="logo.png" alt="Logo de TroncoSport">
+        <div>
+          <span class="eyebrow">Inventario deportivo</span>
+          <h1>TroncoSport Control Center</h1>
+        </div>
+      </a>
+      <nav class="auth-nav" aria-label="Navegación principal">
+        <a href="#beneficios">Beneficios</a>
+        <a href="#modulos">Módulos</a>
+        <a href="#acceso">Ingresar</a>
+      </nav>
+    </header>
+
+    <main class="auth-layout">
+      <section class="hero-panel">
+        <div class="hero-copy">
+          <span class="pill">UI/UX orientado a operaciones</span>
+          <h2>Gestiona inventario, usuarios y procesos en un solo tablero.</h2>
+          <p>
+            Prototipo funcional para el almacén deportivo TroncoSport. Diseñado para
+            registrar productos, consultar existencias, controlar movimientos y visualizar
+            el estado operativo del negocio con una experiencia clara y moderna.
+          </p>
+        </div>
+
+        <div class="hero-grid" id="beneficios">
+          <article class="feature-card">
+            <h3>Inventario centralizado</h3>
+            <p>Consulta stock, categorías, tallas, precios y alertas de abastecimiento.</p>
+          </article>
+          <article class="feature-card">
+            <h3>Gestión de usuarios</h3>
+            <p>Visualiza roles, turnos y niveles de acceso para la operación diaria.</p>
+          </article>
+          <article class="feature-card">
+            <h3>Procesos visibles</h3>
+            <p>Monitorea recepción, verificación, almacenamiento y despacho desde el dashboard.</p>
+          </article>
+        </div>
+
+        <section class="style-preview" id="modulos" aria-labelledby="estilo-ui">
+          <div>
+            <span class="eyebrow">Propuesta de estilo</span>
+            <h3 id="estilo-ui">Linea visual inspirada en energia, fuerza y movimiento.</h3>
+          </div>
+          <div class="style-swatches" aria-label="Paleta de colores TroncoSport">
+            <span class="swatch swatch-dark">Negro carbon</span>
+            <span class="swatch swatch-orange">Naranja energia</span>
+            <span class="swatch swatch-green">Verde impacto</span>
+            <span class="swatch swatch-light">Blanco tecnico</span>
+          </div>
+        </section>
+      </section>
+
+      <section class="login-panel" id="acceso" aria-labelledby="login-title">
+        <div class="panel-heading">
+          <span class="eyebrow">Acceso seguro</span>
+          <h2 id="login-title">Ingresar al sistema</h2>
+          <p>Usa credenciales de demostracion para explorar el prototipo del aula.</p>
+        </div>
+
+        <form class="login-form" id="loginForm">
+          <label for="username">Usuario</label>
+          <input
+            id="username"
+            name="username"
+            type="text"
+            placeholder="Ej: admin.tronco"
+            autocomplete="username"
+            required
+          >
+
+          <label for="password">Contrasena</label>
+          <input
+            id="password"
+            name="password"
+            type="password"
+            placeholder="Ingresa tu contrasena"
+            autocomplete="current-password"
+            required
+          >
+
+          <button class="primary-btn" type="submit">Entrar al dashboard</button>
+          <button class="secondary-btn" type="button" id="demoAccess">Entrar con demo</button>
+        </form>
+
+        <div class="demo-box">
+          <h3>Credenciales demo</h3>
+          <p><strong>Usuario:</strong> admin.tronco</p>
+          <p><strong>Contrasena:</strong> Tronco2026</p>
+        </div>
+
+        <div class="access-note" role="status" aria-live="polite" id="loginMessage">
+          Inicia sesión para abrir la gestión del inventario.
+        </div>
+      </section>
+    </main>
+  </div>
+
+  <script src="app.js"></script>
+</body>
+</html>

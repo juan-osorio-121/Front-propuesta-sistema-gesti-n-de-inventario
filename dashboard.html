@@ -1,0 +1,261 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>TroncoSport | Dashboard de inventario</title>
+  <meta
+    name="description"
+    content="Dashboard CRUD para gestionar el inventario, los usuarios y los procesos de TroncoSport."
+  >
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body class="dashboard-page" data-page="dashboard">
+  <div class="dashboard-shell">
+    <aside class="sidebar">
+      <a class="brand sidebar-brand" href="dashboard.html" aria-label="Dashboard TroncoSport">
+        <img src="logo.png" alt="Logo de TroncoSport">
+        <div>
+          <span class="eyebrow">Sistema de almacen</span>
+          <strong>TroncoSport</strong>
+        </div>
+      </a>
+
+      <nav class="sidebar-nav" aria-label="Navegacion del panel">
+        <a href="#overview">Resumen</a>
+        <a href="#crud">CRUD Inventario</a>
+        <a href="#inventoryTable">Consulta</a>
+        <a href="#users">Usuarios</a>
+        <a href="#processes">Procesos</a>
+      </nav>
+
+      <div class="sidebar-box">
+        <span class="eyebrow">Estado del sistema</span>
+        <h3>Operacion estable</h3>
+        <p>Sin incidencias criticas. Ultimo respaldo de datos: hace 15 minutos.</p>
+      </div>
+    </aside>
+
+    <main class="dashboard-main">
+      <header class="topbar">
+        <div>
+          <span class="eyebrow">Panel operativo</span>
+          <h1>Gestion integral del inventario deportivo</h1>
+        </div>
+
+        <div class="topbar-actions">
+          <div class="user-chip">
+            <strong id="currentUser">Administrador</strong>
+            <span>Rol: Supervisor general</span>
+          </div>
+          <button class="secondary-btn compact-btn" type="button" id="logoutButton">Cerrar sesion</button>
+        </div>
+      </header>
+
+      <section class="stats-grid" id="overview" aria-label="Indicadores de inventario">
+        <article class="stat-card stat-card-primary">
+          <span>Total de referencias</span>
+          <strong id="totalProducts">0</strong>
+          <p>Productos registrados en el inventario general.</p>
+        </article>
+        <article class="stat-card">
+          <span>Unidades disponibles</span>
+          <strong id="totalStock">0</strong>
+          <p>Suma del stock activo en bodega y piso de venta.</p>
+        </article>
+        <article class="stat-card">
+          <span>Alertas de reposicion</span>
+          <strong id="lowStockCount">0</strong>
+          <p>Referencias por debajo del nivel recomendado.</p>
+        </article>
+        <article class="stat-card">
+          <span>Valor del inventario</span>
+          <strong id="inventoryValue">$0</strong>
+          <p>Estimado de valor comercial del inventario registrado.</p>
+        </article>
+      </section>
+
+      <section class="content-grid">
+        <article class="panel-card form-card" id="crud">
+          <div class="panel-heading">
+            <span class="eyebrow">CRUD Inventario</span>
+            <h2>Registrar o editar producto</h2>
+          </div>
+
+          <form id="inventoryForm" class="inventory-form">
+            <input type="hidden" id="productId">
+
+            <label for="productName">Nombre del producto</label>
+            <input id="productName" type="text" placeholder="Ej: Camiseta de compresion" required>
+
+            <div class="form-row">
+              <div>
+                <label for="category">Categoria</label>
+                <select id="category" required>
+                  <option value="">Selecciona una categoria</option>
+                  <option value="Camisetas">Camisetas</option>
+                  <option value="Pantalonetas">Pantalonetas</option>
+                  <option value="Chaquetas">Chaquetas</option>
+                  <option value="Accesorios">Accesorios</option>
+                  <option value="Calzado">Calzado</option>
+                </select>
+              </div>
+              <div>
+                <label for="size">Talla</label>
+                <select id="size" required>
+                  <option value="">Selecciona talla</option>
+                  <option value="XS">XS</option>
+                  <option value="S">S</option>
+                  <option value="M">M</option>
+                  <option value="L">L</option>
+                  <option value="XL">XL</option>
+                  <option value="Unica">Unica</option>
+                  <option value="38">38</option>
+                  <option value="39">39</option>
+                  <option value="40">40</option>
+                  <option value="41">41</option>
+                  <option value="42">42</option>
+                </select>
+              </div>
+            </div>
+
+            <div class="form-row">
+              <div>
+                <label for="stock">Stock</label>
+                <input id="stock" type="number" min="0" placeholder="0" required>
+              </div>
+              <div>
+                <label for="price">Precio</label>
+                <input id="price" type="number" min="0" step="1000" placeholder="0" required>
+              </div>
+            </div>
+
+            <div class="form-row">
+              <div>
+                <label for="supplier">Proveedor</label>
+                <input id="supplier" type="text" placeholder="Ej: Fit Supply SAS" required>
+              </div>
+              <div>
+                <label for="status">Estado</label>
+                <select id="status" required>
+                  <option value="Disponible">Disponible</option>
+                  <option value="Stock bajo">Stock bajo</option>
+                  <option value="Agotado">Agotado</option>
+                </select>
+              </div>
+            </div>
+
+            <div class="form-actions">
+              <button class="primary-btn" type="submit" id="submitButton">Guardar producto</button>
+              <button class="secondary-btn" type="button" id="resetButton">Limpiar</button>
+            </div>
+          </form>
+
+          <div class="inline-message" role="status" aria-live="polite" id="formMessage">
+            Completa el formulario para crear una nueva referencia.
+          </div>
+        </article>
+
+        <article class="panel-card">
+          <div class="panel-heading">
+            <span class="eyebrow">Flujo de trabajo</span>
+            <h2>Gestion de procesos</h2>
+          </div>
+
+          <div class="process-list" id="processes">
+            <div class="process-item">
+              <strong>1. Recepcion de mercancia</strong>
+              <p>Validacion fisica y documental de nuevos ingresos al almacen.</p>
+            </div>
+            <div class="process-item">
+              <strong>2. Clasificacion y etiquetado</strong>
+              <p>Asignacion de categoria, talla, lote y ubicacion en bodega.</p>
+            </div>
+            <div class="process-item">
+              <strong>3. Almacenamiento</strong>
+              <p>Ubicacion en estanteria y sincronizacion con el sistema digital.</p>
+            </div>
+            <div class="process-item">
+              <strong>4. Venta o despacho</strong>
+              <p>Salida controlada de producto y actualizacion automatica del stock.</p>
+            </div>
+          </div>
+
+          <div class="activity-card">
+            <span class="eyebrow">Actividad reciente</span>
+            <ul class="activity-list" id="activityList"></ul>
+          </div>
+        </article>
+      </section>
+
+      <section class="panel-card" aria-labelledby="consulta-title">
+        <div class="panel-heading">
+          <span class="eyebrow">Consulta de inventario</span>
+          <h2 id="consulta-title">Buscar, filtrar, editar y eliminar registros</h2>
+        </div>
+
+        <div class="toolbar">
+          <input
+            id="searchInput"
+            type="search"
+            placeholder="Buscar por nombre, categoria o proveedor"
+            aria-label="Buscar productos"
+          >
+          <select id="filterStatus" aria-label="Filtrar por estado">
+            <option value="Todos">Todos los estados</option>
+            <option value="Disponible">Disponible</option>
+            <option value="Stock bajo">Stock bajo</option>
+            <option value="Agotado">Agotado</option>
+          </select>
+        </div>
+
+        <div class="table-wrapper">
+          <table id="inventoryTable">
+            <thead>
+              <tr>
+                <th>Producto</th>
+                <th>Categoria</th>
+                <th>Talla</th>
+                <th>Stock</th>
+                <th>Precio</th>
+                <th>Proveedor</th>
+                <th>Estado</th>
+                <th>Actualizacion</th>
+                <th>Acciones</th>
+              </tr>
+            </thead>
+            <tbody id="inventoryBody"></tbody>
+          </table>
+        </div>
+      </section>
+
+      <section class="dual-grid">
+        <article class="panel-card" id="users">
+          <div class="panel-heading">
+            <span class="eyebrow">Gestion de usuarios</span>
+            <h2>Equipo con acceso al sistema</h2>
+          </div>
+
+          <div class="user-list" id="userList"></div>
+        </article>
+
+        <article class="panel-card">
+          <div class="panel-heading">
+            <span class="eyebrow">Recomendaciones UX</span>
+            <h2>Criterios aplicados en el prototipo</h2>
+          </div>
+
+          <ul class="principles-list">
+            <li>Jerarquia visual clara con metricas primero y acciones clave siempre visibles.</li>
+            <li>Colores funcionales para distinguir estados del inventario y orientar decisiones rapidas.</li>
+            <li>Formulario dividido por bloques logicos para reducir errores de captura.</li>
+            <li>Panel responsive para uso comodo en pantallas de escritorio y portatiles Windows.</li>
+          </ul>
+        </article>
+      </section>
+    </main>
+  </div>
+
+  <script src="app.js"></script>
+</body>
+</html>
